@@ -1,0 +1,26 @@
+{
+  "slug": "macrow",
+  "name": "Macrow",
+  "version": "2.0.0",
+  "license": "whatever",
+  "brand": "sys",
+  "author": "tim coggins",
+  "authorEmail": "",
+  "authorUrl": "",
+  "pluginUrl": "",
+  "manualUrl": "",
+  "sourceUrl": "",
+  "donateUrl": "",
+  "changelogUrl": "",
+  "modules": [
+    {
+      "slug": "macrow",
+      "name": "Macrow",
+      "description": "Voltage-controlled Macro Knob",
+      "manualUrl": "",
+      "tags": [
+        "attenuator"
+      ]
+    }
+  ]
+}
