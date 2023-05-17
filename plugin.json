@@ -1,6 +1,6 @@
 {
-  "slug": "macrow",
-  "name": "Macrow",
+  "slug": "unethicalmachines",
+  "name": "unethical machines",
   "version": "2.0.0",
   "license": "whatever",
   "brand": "sys",
@@ -20,6 +20,15 @@
       "manualUrl": "",
       "tags": [
         "attenuator"
+      ]
+    },
+    {
+      "slug": "fiveStep",
+      "name": "Five Step",
+      "description": "Simple 5 step sequencer",
+      "manualUrl": "",
+      "tags": [
+        "sequencer"
       ]
     }
   ]

@@ -8,3 +8,12 @@ using namespace rack;
 extern Plugin* pluginInstance;
 // Declare each Model, defined in each module source file
 extern Model* model_macrow;
+extern Model* model_fiveStep;
+
+template <typename TBase = GrayModuleLightWidget>
+struct YellowRedLight : TBase {
+	YellowRedLight() {
+		this->addBaseColor(SCHEME_YELLOW);
+		this->addBaseColor(SCHEME_RED);
+	}
+};
