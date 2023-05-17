@@ -34,12 +34,10 @@ struct fiveStep : Module {
 		configInput(RESET_INPUT, "Reset");
 
 		for (int i = 0; i < 5; i++) {
-            // configInput(IN_INPUTS + i, string::f("Channel %d", i + 1));
 			configParam(LEVEL_PARAMS + i, -1.f, 1.f, 0.f, string::f("value %d", 1), "%", 0, 100);
         }
 		
 		configOutput(OUT_OUTPUTS + 0, "Main");
-
 		lightDivider.setDivision(512);
 	}
 
@@ -57,8 +55,8 @@ struct fiveStep : Module {
 
 		int channels = 1;
 
-        float out[16] = {};
 
+        float out[16] = {};
 		for (int c = 0; c < channels; c++) {
 			float in = params[LEVEL_PARAMS + index].getValue();
 			out[c] += in * 10.0;
@@ -68,7 +66,7 @@ struct fiveStep : Module {
         outputs[OUT_OUTPUTS + 0].setChannels(channels);
         outputs[OUT_OUTPUTS + 0].writeVoltages(out);
 
-		// // Set lights
+		// Set lights
 		if (lightDivider.process()) {
 			for (int i = 0; i < 5; i++) {
 				lights[CHANNEL_LIGHTS + 2 * i + 0].setBrightness(index == i);
@@ -80,7 +78,6 @@ struct fiveStep : Module {
 
 
 struct fiveStepWidget : ModuleWidget {
-
 	fiveStepWidget(fiveStep* module) {
 		setModule(module);
 		setPanel(createPanel(asset::plugin(pluginInstance, "res/fiveStep.svg")));
