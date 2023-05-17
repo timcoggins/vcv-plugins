@@ -1,12 +1,20 @@
 # VCV Modules
 
-## Macro
+## Macrow
 6 attenuverters with one macro knob (also an attenuverter) which controls the magnitude of all channels. A quick remix of the original 8vert VCV module for better control over many values from one knob.
 
+
+![Macrow](preview.jpg)
+
+
 ### To Do
+
 Panel design
+
 Normalling behaviour
+
 Macrow knob could also take CV
+
 
 ### Build
 

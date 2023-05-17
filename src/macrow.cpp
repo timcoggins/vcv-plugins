@@ -1,6 +1,8 @@
 #include "plugin.hpp"
 
-
+/**
+ * MACROWWWWWW
+ */
 struct _macrow : Module {
 	enum ParamIds {
 		ENUMS(GAIN_PARAMS, 6),
@@ -19,75 +21,65 @@ struct _macrow : Module {
 		NUM_LIGHTS
 	};
 
-	dsp::ClockDivider paramDivider;
 
+	/**
+	 * Construtor
+	 */
 	_macrow() {
 		config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
+
 		for (int i = 0; i < 6; i++) {
-			configParam(GAIN_PARAMS + i, -1.f, 1.f, 0.f, string::f("Row %d gain", i + 1), "%", 0, 100);
-			configInput(IN_INPUTS + i, string::f("Row %d", i + 1));
-			configOutput(OUT_OUTPUTS + i, string::f("Row %d", i + 1));
+			configParam(GAIN_PARAMS + i, -1.f, 1.f, 0.f, string::f("Channel %d", i + 1), "%", 0, 100);
+			configInput(IN_INPUTS + i, string::f("In %d", i + 1));
+			configOutput(OUT_OUTPUTS + i, string::f("Out %d", i + 1));
 		}
 
-		configParam(MACRO_PARAMS, -1.f, 1.f, 0.f, string::f("MACRO %d gain", 1), "%", 0, 100);
-
-
-		paramDivider.setDivision(2048);
+		configParam(MACRO_PARAMS, -1.f, 1.f, 0.f, string::f("MACROWED %d", 1), "%", 0, 100);
 	}
 
+
+	/**
+	 * Audio Process 
+	 */
 	void process(const ProcessArgs& args) override {
-		float in[16] = {10.f};
-		int channels = 1;
+		float in[1] = {10.0f};
+		float out[1] = {10.0f};
 
 		for (int i = 0; i < 6; i++) {
-			// Get input
+
 			if (inputs[IN_INPUTS + i].isConnected()) {
-				channels = inputs[IN_INPUTS + i].getChannels();
 				inputs[IN_INPUTS + i].readVoltages(in);
 			}
 
 			if (outputs[OUT_OUTPUTS + i].isConnected()) {
-				// Apply gain
-				float out[16];
-
 				float gain = params[GAIN_PARAMS + i].getValue();
 				float macroGain = params[MACRO_PARAMS].getValue();
 
-				for (int c = 0; c < channels; c++) {
-					out[c] = macroGain * gain * in[c];
-				}
+				out[0] = in[0] * gain * macroGain;
 
-				// Set output
-				outputs[OUT_OUTPUTS + i].setChannels(channels);
+				outputs[OUT_OUTPUTS + i].setChannels(1);
 				outputs[OUT_OUTPUTS + i].writeVoltages(out);
 			}
 		}
 	}
 
-	/** Set the gain param units to either V or %, depending on whether a cable is connected. */
+	/**
+	 * When is this called? 
+ 	*/
 	void refreshParamQuantities() {
-		bool normalized = false;
-
 		for (int i = 0; i < 6; i++) {
 			ParamQuantity* pq = paramQuantities[GAIN_PARAMS + i];
 			if (!pq)
 				continue;
-
-			if (inputs[IN_INPUTS + i].isConnected())
-				normalized = false;
-			if (normalized) {
-				pq->unit = "V";
-				pq->displayMultiplier = 10.f;
-			}
-			else {
-				pq->unit = "%";
-				pq->displayMultiplier = 100.f;
-			}
+			pq->unit = "%";
+			pq->displayMultiplier = 100.f;
 		}
 	}
 };
 
-
+/** 
+ * Interface
+ */
 struct _macrowWidget : ModuleWidget {
 	_macrowWidget(_macrow* module) {
 		setModule(module);
