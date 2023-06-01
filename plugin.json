@@ -30,6 +30,15 @@
       "tags": [
         "sequencer"
       ]
+    },
+    {
+      "slug": "Rectify",
+      "name": "Rectify",
+      "description": "Makes things unipolar",
+      "manualUrl": "",
+      "tags": [
+        "utility"
+      ]
     }
   ]
 }

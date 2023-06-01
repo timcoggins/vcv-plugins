@@ -49,12 +49,12 @@ struct fiveStep : Module {
 		if (resetTrigger.process(rescale(inputs[RESET_INPUT].getVoltage(), 0.1f, 2.f, 0.f, 1.f))) {
 			index = 0;
 		}
+
 		int length = 3 + (int) std::round(params[STEPS_PARAM].getValue());
 		if (index >= length)
 			index = 0;
 
 		int channels = 1;
-
 
         float out[16] = {};
 		for (int c = 0; c < channels; c++) {
